@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Tots - Demo </title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font for a clean look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <aside class="w-64 flex-shrink-0 bg-white text-gray-600 flex flex-col border-r">
+            <!-- Logo -->
+            <div class="h-20 flex items-center justify-center px-4 border-b">
+                 <div class="w-20 h-20 mr-3 rounded-full flex items-center justify-center">
+                   <img src="assets/logo/logo.png" alt="">
+                 </div>
+            </div>
+            <!-- Navigation Links -->
+            <nav class="flex-1 px-4 py-6 space-y-2">
+                <a href="index.html" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-200 font-medium">
+                    <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
+                    Dashboard
+                </a>
+                <a href="calender.html" class="flex items-center px-4 py-2 rounded-md bg-red-500 text-white font-medium">
+                    <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    Calendar
+                </a>
+            
+                <a href="menu-items.html" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-200 font-medium">
+                    <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    Menu Items
+                </a>
+            </nav>
+            <!-- Logout Button -->
+            <div class="p-4 mt-auto border-t">
+                <a href="login.html" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-200 font-medium">
+                    <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    Logout
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto">
+           
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const weeklyOrdersContainer = document.getElementById('weekly-orders-container');
+            const schoolSelector = document.getElementById('school-selector');
+            const weeklyOrdersTbody = document.getElementById('weekly-orders-tbody');
+            const weeklyOrdersTfoot = document.getElementById('weekly-orders-tfoot');
+
+            const schoolData = {
+                "Dollar Nursery": [
+                    { day: 'Monday', std: 2, alt: 0, spc: '-' },
+                    { day: 'Tuesday', std: 3, alt: 1, spc: '1 Halal' },
+                    { day: 'Wednesday', std: 2, alt: 2, spc: '-' },
+                    { day: 'Thursday', std: 1, alt: 1, spc: '-' },
+                    { day: 'Friday', std: 2, alt: 0, spc: '-' },
+                    { day: 'Saturday', std: 3, alt: 1, spc: '-' },
+                    { day: 'Sunday', std: 1, alt: 0, spc: '-' },
+                ],
+                "Old Doune Road": [
+                    { day: 'Monday', std: 3, alt: 1, spc: '-' },
+                    { day: 'Tuesday', std: 5, alt: 0, spc: '-' },
+                    { day: 'Wednesday', std: 3, alt: 3, spc: '-' },
+                    { day: 'Thursday', std: 4, alt: 2, spc: '-' },
+                    { day: 'Friday', std: 3, alt: 1, spc: '-' },
+                    { day: 'Saturday', std: 4, alt: 1, spc: '-' },
+                    { day: 'Sunday', std: 2, alt: 0, spc: '-' },
+                ],
+                "Lecropt Nursery": [
+                    { day: 'Monday', std: 5, alt: 1, spc: '-' },
+                    { day: 'Tuesday', std: 4, alt: 0, spc: '-' },
+                    { day: 'Wednesday', std: 2, alt: 2, spc: '-' },
+                    { day: 'Thursday', std: 3, alt: 2, spc: '-' },
+                    { day: 'Friday', std: 2, alt: 1, spc: '-' },
+                    { day: 'Saturday', std: 4, alt: 1, spc: '-' },
+                    { day: 'Sunday', std: 3, alt: 1, spc: '-' },
+                ]
+                // ... add more schools data as needed
+            };
+            
+            // Populate dropdown
+            const schools = ["Dollar Nursery", "Old Doune Road", "Lecropt Nursery", "Fossoplay", "Rosemount Kinross", "Pitreavie Playgroup", "Cranley Lanark U2's", "Cranley Lanark Rd Juniors", "Cranley Lanark Rd Seniors", "Cranley Buckstone U2's", "Cranley Buckstone JR's", "Cranley Buckstone SR's"];
+            schools.forEach(school => {
+                const option = document.createElement('option');
+                option.value = school;
+                option.textContent = school;
+                schoolSelector.appendChild(option);
+            });
+            
+            // Function to parse numeric values from special orders string
+            function parseSpecialOrders(text) {
+                if (!text || text === '-' || text.toLowerCase().includes('-')) {
+                    return 0;
+                }
+                const numbers = text.match(/\b\d+\b/g);
+                if (!numbers) {
+                    return 0;
+                }
+                return numbers.reduce((sum, num) => sum + parseInt(num, 10), 0);
+            }
+
+            // Function to render table
+            function renderTable(schoolName) {
+                weeklyOrdersTbody.innerHTML = ''; // Clear existing table body
+                weeklyOrdersTfoot.innerHTML = ''; // Clear existing table foot
+                
+                const data = schoolData[schoolName] || []; // Default to empty array if no data
+                
+                let totalStd = 0;
+                let totalAlt = 0;
+                let totalSpc = 0;
+
+                data.forEach(row => {
+                    const specialCount = parseSpecialOrders(row.spc);
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="py-3 px-4">${row.day}</td>
+                        <td class="py-3 px-4">${row.std}</td>
+                        <td class="py-3 px-4">${row.alt}</td>
+                        <td class="py-3 px-4">${row.spc}</td>
+                    `;
+                    weeklyOrdersTbody.appendChild(tr);
+
+                    // Calculate totals
+                    totalStd += row.std;
+                    totalAlt += row.alt;
+                    totalSpc += specialCount;
+                });
+                
+                // Render footer with totals
+                if (data.length > 0) {
+                    const tfootTr = document.createElement('tr');
+                    tfootTr.className = 'font-bold bg-gray-50 text-gray-800';
+                    tfootTr.innerHTML = `
+                        <td class="py-3 px-4">Weekly Total</td>
+                        <td class="py-3 px-4">${totalStd}</td>
+                        <td class="py-3 px-4">${totalAlt}</td>
+                        <td class="py-3 px-4">${totalSpc}</td>
+                    `;
+                    weeklyOrdersTfoot.appendChild(tfootTr);
+                }
+            }
+
+            // Event listener for dropdown change
+            schoolSelector.addEventListener('change', (e) => {
+                if (e.target.value) {
+                    weeklyOrdersContainer.classList.remove('hidden');
+                    renderTable(e.target.value);
+                } else {
+                    weeklyOrdersContainer.classList.add('hidden');
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
+
