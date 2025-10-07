@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Orders</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* Custom styles for number input arrows */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-20 border-b border-gray-200">
+                    <div class="flex items-center space-x-4">
+                        <img class="h-12 w-12" src="../assets/logo/school-logo.png" alt="School Logo">
+                        <h1 class="text-xl font-semibold text-gray-800">Little Learner Nursery</h1>
+                    </div>
+                    <div class="flex items-center space-x-6">
+                        <a href="school-order.html" title="Create Order" class="text-gray-500 hover:text-red-600 transition">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </a>
+                        <a href="schoo-dashboard.html" title="Dashboard"
+                            class="text-gray-500 hover:text-red-600 transition">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a href="school-profile.html" title="Profile" class="text-red-600 transition">
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </a>
+                        <a href="school-login.html"
+                            class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="bg-white p-8 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Edit Profile</h2>
+
+                <form id="profile-form" class="space-y-6">
+                    <div>
+                        <label for="school-name" class="block text-sm font-medium text-gray-700">School Name</label>
+                        <input type="text" id="school-name" value="Little Learner Nursery"
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="first-name" class="block text-sm font-medium text-gray-700">First Name</label>
+                            <input type="text" id="first-name" value="Jane"
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="last-name" class="block text-sm font-medium text-gray-700">Last Name</label>
+                            <input type="text" id="last-name" value="Doe"
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="email" value="jane.doe@llnursery.com" readonly
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 text-gray-500 sm:text-sm cursor-not-allowed">
+                    </div>
+
+                    <!-- Dynamic Allergy List -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Allergies List</label>
+                        <div id="allergy-list-container" class="mt-2 space-y-3">
+                            <!-- Allergy rows will be dynamically inserted here -->
+                        </div>
+                        <button type="button" id="add-allergy-btn"
+                            class="mt-3 w-full text-sm text-red-600 border-2 border-dashed border-gray-300 rounded-md py-2 hover:bg-red-50 transition">+
+                            Add another allergy</button>
+                    </div>
+
+                    <div class="pt-4 text-right">
+                        <button type="submit"
+                            class="w-full sm:w-auto bg-red-600 text-white font-semibold py-2 px-8 rounded-lg hover:bg-red-700 transition duration-300 shadow-md">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <!-- Notification Popup -->
+    <div id="notification"
+        class="fixed bottom-5 right-5 bg-green-500 text-white py-3 px-6 rounded-lg shadow-xl opacity-0 transform translate-y-10 pointer-events-none">
+        Profile updated successfully!
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const profileForm = document.getElementById('profile-form');
+            const notification = document.getElementById('notification');
+            const allergyListContainer = document.getElementById('allergy-list-container');
+            const addAllergyBtn = document.getElementById('add-allergy-btn');
+
+            const renumberAllergyRows = () => {
+                const rows = allergyListContainer.querySelectorAll('.allergy-row');
+                rows.forEach((row, index) => {
+                    row.querySelector('.row-number').textContent = `${index + 1}.`;
+                });
+            };
+
+            const createAllergyRow = (predefinedValue = "") => {
+                const newRow = document.createElement('div');
+                newRow.className = 'allergy-row flex items-center space-x-2';
+
+                newRow.innerHTML = `
+                    <span class="row-number text-sm font-semibold text-gray-500"></span>
+                    <input type="text" value="${predefinedValue}" placeholder="e.g., Dairy" class="flex-grow w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                    <button type="button" title="Add comma" class="add-comma-btn flex-shrink-0 text-gray-400 hover:text-red-500">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v4a1 1 0 11-2 0V4a1 1 0 011-1zm-1.002 8.246a1 1 0 011.415 0l3 3a1 1 0 11-1.414 1.414L10 13.414l-1.59 1.59a1 1 0 11-1.414-1.414l2-2a1 1 0 010-1.414z" clip-rule="evenodd" transform="rotate(90 10 10)"></path><path d="M6 3a1 1 0 011 1v4a1 1 0 11-2 0V4a1 1 0 011-1zM5.002 11.246a1 1 0 011.415 0l3 3a1 1 0 11-1.414 1.414L6 13.414l-1.59 1.59a1 1 0 11-1.414-1.414l2-2a1 1 0 010-1.414z" transform="rotate(90 6 10)"></path></svg>
+                    </button>
+                    <button type="button" title="Delete" class="delete-row-btn flex-shrink-0 text-gray-400 hover:text-red-500">
+                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                `;
+
+                // Add event listener for the new delete button
+                newRow.querySelector('.delete-row-btn').addEventListener('click', function () {
+                    this.closest('.allergy-row').remove();
+                    renumberAllergyRows();
+                });
+
+                // Add event listener for the new comma button
+                newRow.querySelector('.add-comma-btn').addEventListener('click', function () {
+                    const input = this.previousElementSibling;
+                    const currentValue = input.value.trim();
+                    if (currentValue && !currentValue.endsWith(',')) {
+                        input.value += ', ';
+                    }
+                    input.focus();
+                });
+
+                allergyListContainer.appendChild(newRow);
+                renumberAllergyRows();
+            };
+
+            addAllergyBtn.addEventListener('click', () => createAllergyRow());
+
+            // Load predefined examples
+            createAllergyRow("Peanuts");
+            createAllergyRow("Dairy");
+
+            // --- Form Submission ---
+            profileForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                console.log('Profile form submitted');
+
+                notification.classList.remove('opacity-0', 'translate-y-10');
+                notification.classList.add('opacity-100', 'translate-y-0');
+
+                setTimeout(() => {
+                    notification.classList.remove('opacity-100', 'translate-y-0');
+                    notification.classList.add('opacity-0', 'translate-y-10');
+                }, 3000);
+            });
+
+        });
+    </script>
+
+
+
+
+</body>
+
+</html>
