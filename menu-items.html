@@ -96,7 +96,15 @@
                             <input type="text" id="menu-item-name" name="menu-item-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="e.g., Classic Burger">
                         </div>
 
-                       
+                        <!-- Menu Category -->
+                        <div class="relative" style="opacity: 0; height: 0px;">
+                            <label for="menu-category" class="block text-sm font-medium text-gray-700">Menu Category</label>
+                            <input type="text" id="menu-category-search" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Search or add new category...">
+                            <div id="menu-category-dropdown" class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg hidden dropdown-content">
+                                <!-- Options will be populated by JS -->
+                            </div>
+                        </div>
+                        
                         <!-- Ingredients -->
                         <div class="relative">
                             <label for="ingredients-search" class="block text-sm font-medium text-gray-700">Ingredients</label>
