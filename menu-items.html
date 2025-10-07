@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Healthy Tots - Demo </title>
+    <title>Menu Items</title>
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Font for a clean look -->
@@ -14,12 +14,41 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+        /* Custom styles for the searchable dropdown */
+        .dropdown-content {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            background-color: #e0e7ff; /* indigo-100 */
+            color: #3730a3; /* indigo-800 */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .tag-remove {
+            margin-left: 0.5rem;
+            cursor: pointer;
+            width: 1rem;
+            height: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #c7d2fe; /* indigo-200 */
+        }
     </style>
 </head>
 <body class="bg-gray-100">
 
     <div class="flex h-screen bg-gray-100">
         <!-- Sidebar -->
+       <!-- Sidebar -->
         <aside class="w-64 flex-shrink-0 bg-white text-gray-600 flex flex-col border-r">
             <!-- Logo -->
             <div class="h-20 flex items-center justify-center px-4 border-b">
@@ -54,123 +83,200 @@
 
         <!-- Main Content -->
         <main class="flex-1 overflow-y-auto">
-           
+            <div class="p-4 sm:p-6 lg:p-10">
+                <div class="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
+                    <!-- Form Header -->
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Create Menu Item</h1>
+                    <p class="text-gray-600 mb-8">Add a new item to the menu database.</p>
+
+                    <form id="menu-item-form" action="#" method="POST" class="space-y-6">
+                        <!-- Menu Item Name -->
+                        <div>
+                            <label for="menu-item-name" class="block text-sm font-medium text-gray-700">Menu Item Name</label>
+                            <input type="text" id="menu-item-name" name="menu-item-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="e.g., Classic Burger">
+                        </div>
+
+                        <!-- Menu Category -->
+                        <div class="relative">
+                            <label for="menu-category" class="block text-sm font-medium text-gray-700">Menu Category</label>
+                            <input type="text" id="menu-category-search" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Search or add new category...">
+                            <div id="menu-category-dropdown" class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg hidden dropdown-content">
+                                <!-- Options will be populated by JS -->
+                            </div>
+                        </div>
+                        
+                        <!-- Ingredients -->
+                        <div class="relative">
+                            <label for="ingredients-search" class="block text-sm font-medium text-gray-700">Ingredients</label>
+                            <div id="ingredients-tags" class="mt-2">
+                                <!-- Selected ingredient tags will appear here -->
+                            </div>
+                            <input type="text" id="ingredients-search" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Search or add new ingredients...">
+                            <div id="ingredients-dropdown" class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg hidden dropdown-content">
+                                <!-- Options will be populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-4 text-right">
+                            <button type="submit" class="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                Submit Item
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </main>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const weeklyOrdersContainer = document.getElementById('weekly-orders-container');
-            const schoolSelector = document.getElementById('school-selector');
-            const weeklyOrdersTbody = document.getElementById('weekly-orders-tbody');
-            const weeklyOrdersTfoot = document.getElementById('weekly-orders-tfoot');
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DATA ---
+            let categories = ['Main Course', 'Appetizer', 'Dessert', 'Beverage', 'Side Dish'];
+            let ingredients = ['Beef Patty', 'Lettuce', 'Tomato', 'Cheese', 'Bun', 'Onion', 'Flour', 'Sugar', 'Salt', 'Chicken Breast'];
+            let selectedIngredients = new Set();
 
-            const schoolData = {
-                "Dollar Nursery": [
-                    { day: 'Monday', std: 2, alt: 0, spc: '-' },
-                    { day: 'Tuesday', std: 3, alt: 1, spc: '1 Halal' },
-                    { day: 'Wednesday', std: 2, alt: 2, spc: '-' },
-                    { day: 'Thursday', std: 1, alt: 1, spc: '-' },
-                    { day: 'Friday', std: 2, alt: 0, spc: '-' },
-                    { day: 'Saturday', std: 3, alt: 1, spc: '-' },
-                    { day: 'Sunday', std: 1, alt: 0, spc: '-' },
-                ],
-                "Old Doune Road": [
-                    { day: 'Monday', std: 3, alt: 1, spc: '-' },
-                    { day: 'Tuesday', std: 5, alt: 0, spc: '-' },
-                    { day: 'Wednesday', std: 3, alt: 3, spc: '-' },
-                    { day: 'Thursday', std: 4, alt: 2, spc: '-' },
-                    { day: 'Friday', std: 3, alt: 1, spc: '-' },
-                    { day: 'Saturday', std: 4, alt: 1, spc: '-' },
-                    { day: 'Sunday', std: 2, alt: 0, spc: '-' },
-                ],
-                "Lecropt Nursery": [
-                    { day: 'Monday', std: 5, alt: 1, spc: '-' },
-                    { day: 'Tuesday', std: 4, alt: 0, spc: '-' },
-                    { day: 'Wednesday', std: 2, alt: 2, spc: '-' },
-                    { day: 'Thursday', std: 3, alt: 2, spc: '-' },
-                    { day: 'Friday', std: 2, alt: 1, spc: '-' },
-                    { day: 'Saturday', std: 4, alt: 1, spc: '-' },
-                    { day: 'Sunday', std: 3, alt: 1, spc: '-' },
-                ]
-                // ... add more schools data as needed
+            // --- CATEGORY DROPDOWN LOGIC ---
+            const categorySearch = document.getElementById('menu-category-search');
+            const categoryDropdown = document.getElementById('menu-category-dropdown');
+
+            const renderCategoryDropdown = (filter = '') => {
+                const filteredCategories = categories.filter(c => c.toLowerCase().includes(filter.toLowerCase()));
+                categoryDropdown.innerHTML = '';
+                
+                if (filteredCategories.length > 0) {
+                    filteredCategories.forEach(category => {
+                        const item = document.createElement('a');
+                        item.href = '#';
+                        item.textContent = category;
+                        item.className = 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
+                        item.onclick = (e) => {
+                            e.preventDefault();
+                            categorySearch.value = category;
+                            categoryDropdown.classList.add('hidden');
+                        };
+                        categoryDropdown.appendChild(item);
+                    });
+                }
+
+                if (filter && !categories.find(c => c.toLowerCase() === filter.toLowerCase())) {
+                    const addItem = document.createElement('a');
+                    addItem.href = '#';
+                    addItem.innerHTML = `Add "<strong>${filter}</strong>"`;
+                    addItem.className = 'block px-4 py-2 text-sm text-indigo-600 hover:bg-gray-100';
+                    addItem.onclick = (e) => {
+                        e.preventDefault();
+                        categories.push(filter);
+                        categorySearch.value = filter;
+                        categoryDropdown.classList.add('hidden');
+                    };
+                    categoryDropdown.appendChild(addItem);
+                }
+                
+                categoryDropdown.classList.toggle('hidden', categoryDropdown.children.length === 0);
             };
-            
-            // Populate dropdown
-            const schools = ["Dollar Nursery", "Old Doune Road", "Lecropt Nursery", "Fossoplay", "Rosemount Kinross", "Pitreavie Playgroup", "Cranley Lanark U2's", "Cranley Lanark Rd Juniors", "Cranley Lanark Rd Seniors", "Cranley Buckstone U2's", "Cranley Buckstone JR's", "Cranley Buckstone SR's"];
-            schools.forEach(school => {
-                const option = document.createElement('option');
-                option.value = school;
-                option.textContent = school;
-                schoolSelector.appendChild(option);
+
+            categorySearch.addEventListener('input', () => renderCategoryDropdown(categorySearch.value));
+            categorySearch.addEventListener('focus', () => renderCategoryDropdown(categorySearch.value));
+            document.addEventListener('click', (e) => {
+                if (!categorySearch.contains(e.target)) {
+                    categoryDropdown.classList.add('hidden');
+                }
             });
-            
-            // Function to parse numeric values from special orders string
-            function parseSpecialOrders(text) {
-                if (!text || text === '-' || text.toLowerCase().includes('-')) {
-                    return 0;
-                }
-                const numbers = text.match(/\b\d+\b/g);
-                if (!numbers) {
-                    return 0;
-                }
-                return numbers.reduce((sum, num) => sum + parseInt(num, 10), 0);
-            }
 
-            // Function to render table
-            function renderTable(schoolName) {
-                weeklyOrdersTbody.innerHTML = ''; // Clear existing table body
-                weeklyOrdersTfoot.innerHTML = ''; // Clear existing table foot
-                
-                const data = schoolData[schoolName] || []; // Default to empty array if no data
-                
-                let totalStd = 0;
-                let totalAlt = 0;
-                let totalSpc = 0;
+            // --- INGREDIENTS DROPDOWN LOGIC ---
+            const ingredientsSearch = document.getElementById('ingredients-search');
+            const ingredientsDropdown = document.getElementById('ingredients-dropdown');
+            const ingredientsTagsContainer = document.getElementById('ingredients-tags');
 
-                data.forEach(row => {
-                    const specialCount = parseSpecialOrders(row.spc);
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td class="py-3 px-4">${row.day}</td>
-                        <td class="py-3 px-4">${row.std}</td>
-                        <td class="py-3 px-4">${row.alt}</td>
-                        <td class="py-3 px-4">${row.spc}</td>
-                    `;
-                    weeklyOrdersTbody.appendChild(tr);
-
-                    // Calculate totals
-                    totalStd += row.std;
-                    totalAlt += row.alt;
-                    totalSpc += specialCount;
+            const renderIngredientTags = () => {
+                ingredientsTagsContainer.innerHTML = '';
+                selectedIngredients.forEach(ingredient => {
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.textContent = ingredient;
+                    
+                    const removeBtn = document.createElement('span');
+                    removeBtn.className = 'tag-remove';
+                    removeBtn.innerHTML = '&times;';
+                    removeBtn.onclick = () => {
+                        selectedIngredients.delete(ingredient);
+                        renderIngredientTags();
+                    };
+                    
+                    tag.appendChild(removeBtn);
+                    ingredientsTagsContainer.appendChild(tag);
                 });
-                
-                // Render footer with totals
-                if (data.length > 0) {
-                    const tfootTr = document.createElement('tr');
-                    tfootTr.className = 'font-bold bg-gray-50 text-gray-800';
-                    tfootTr.innerHTML = `
-                        <td class="py-3 px-4">Weekly Total</td>
-                        <td class="py-3 px-4">${totalStd}</td>
-                        <td class="py-3 px-4">${totalAlt}</td>
-                        <td class="py-3 px-4">${totalSpc}</td>
-                    `;
-                    weeklyOrdersTfoot.appendChild(tfootTr);
-                }
-            }
+            };
 
-            // Event listener for dropdown change
-            schoolSelector.addEventListener('change', (e) => {
-                if (e.target.value) {
-                    weeklyOrdersContainer.classList.remove('hidden');
-                    renderTable(e.target.value);
-                } else {
-                    weeklyOrdersContainer.classList.add('hidden');
+            const addIngredient = (ingredient) => {
+                if (!selectedIngredients.has(ingredient)) {
+                    selectedIngredients.add(ingredient);
+                    renderIngredientTags();
+                }
+                ingredientsSearch.value = '';
+                ingredientsDropdown.classList.add('hidden');
+            };
+
+            const renderIngredientsDropdown = (filter = '') => {
+                const availableIngredients = ingredients.filter(i => 
+                    !selectedIngredients.has(i) && 
+                    i.toLowerCase().includes(filter.toLowerCase())
+                );
+                ingredientsDropdown.innerHTML = '';
+
+                if (availableIngredients.length > 0) {
+                    availableIngredients.forEach(ingredient => {
+                        const item = document.createElement('a');
+                        item.href = '#';
+                        item.textContent = ingredient;
+                        item.className = 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
+                        item.onclick = (e) => {
+                            e.preventDefault();
+                            addIngredient(ingredient);
+                        };
+                        ingredientsDropdown.appendChild(item);
+                    });
+                }
+                
+                if (filter && !ingredients.find(i => i.toLowerCase() === filter.toLowerCase())) {
+                    const addItem = document.createElement('a');
+                    addItem.href = '#';
+                    addItem.innerHTML = `Add "<strong>${filter}</strong>"`;
+                    addItem.className = 'block px-4 py-2 text-sm text-indigo-600 hover:bg-gray-100';
+                    addItem.onclick = (e) => {
+                        e.preventDefault();
+                        ingredients.push(filter);
+                        addIngredient(filter);
+                    };
+                    ingredientsDropdown.appendChild(addItem);
+                }
+                
+                ingredientsDropdown.classList.toggle('hidden', ingredientsDropdown.children.length === 0);
+            };
+
+            ingredientsSearch.addEventListener('input', () => renderIngredientsDropdown(ingredientsSearch.value));
+            ingredientsSearch.addEventListener('focus', () => renderIngredientsDropdown(ingredientsSearch.value));
+            document.addEventListener('click', (e) => {
+                if (!ingredientsSearch.contains(e.target)) {
+                    ingredientsDropdown.classList.add('hidden');
                 }
             });
 
+            // --- FORM SUBMISSION ---
+            document.getElementById('menu-item-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const formData = {
+                    name: document.getElementById('menu-item-name').value,
+                    category: categorySearch.value,
+                    ingredients: Array.from(selectedIngredients)
+                };
+                console.log('Form Submitted:', formData);
+                alert('Menu item submitted! Check the console for the data.');
+                // Here you would typically send the data to a server
+            });
         });
     </script>
+
 </body>
 </html>
-

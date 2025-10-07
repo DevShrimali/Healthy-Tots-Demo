@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Healthy Tots - Demo </title>
+    <title>Calendar</title>
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FullCalendar for the calendar view -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+    <!-- Flatpickr for multi-date selection -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- Google Font for a clean look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
@@ -13,6 +18,46 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+        }
+
+        /* FullCalendar Customizations */
+        .fc .fc-event {
+            background-color: #e0e7ff;
+            /* indigo-100 */
+            border: 1px solid #c7d2fe;
+            /* indigo-200 */
+            color: #3730a3;
+            /* indigo-800 */
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-bottom: 4px;
+            white-space: normal;
+            cursor: default;
+        }
+
+        .fc .fc-event-title {
+            font-weight: 500;
+        }
+
+        /* Style for the multi-date picker input */
+        .flatpickr-input {
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .item-card {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .item-card {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
@@ -22,7 +67,7 @@
         <!-- Sidebar -->
         <aside class="w-64 flex-shrink-0 bg-white text-gray-600 flex flex-col border-r">
             <!-- Logo -->
-            <div class="h-20 flex items-center justify-center px-4 border-b">
+              <div class="h-20 flex items-center justify-center px-4 border-b">
                  <div class="w-20 h-20 mr-3 rounded-full flex items-center justify-center">
                    <img src="assets/logo/logo.png" alt="">
                  </div>
@@ -37,7 +82,6 @@
                     <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     Calendar
                 </a>
-            
                 <a href="menu-items.html" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-200 font-medium">
                     <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                     Menu Items
@@ -54,123 +98,252 @@
 
         <!-- Main Content -->
         <main class="flex-1 overflow-y-auto">
-           
+            <div class="p-4 sm:p-6 lg:p-10 space-y-8">
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <!-- Form Header -->
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Calendar Orders</h1>
+                    <p class="text-gray-600 mb-4">Select dates for your desired menu and pudding items below.</p>
+
+                    <!-- Month and Year Selectors -->
+                    <div class="flex items-center space-x-4 mb-8">
+                        <div class="w-full sm:w-auto">
+                            <label for="month-select" class="sr-only">Select Month</label>
+                            <select id="month-select" class="w-full rounded-md border-gray-300 shadow-sm"></select>
+                        </div>
+                         <div class="w-full sm:w-auto">
+                             <label for="year-select" class="sr-only">Select Year</label>
+                            <select id="year-select" class="w-full rounded-md border-gray-300 shadow-sm"></select>
+                        </div>
+                    </div>
+
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-12 gap-y-8">
+                        <!-- Left Column: Menu Items -->
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b">Menu Items</h2>
+                            <div id="menu-list-container" class="space-y-3">
+                                <!-- Menu items will be dynamically inserted here -->
+                            </div>
+                            <div class="mt-6 text-center">
+                                <button id="submit-menu-btn" type="button" class="w-full sm:w-auto inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    Submit Menu Orders
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Right Column: Pudding Items -->
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b">Pudding Items</h2>
+                            <div id="pudding-list-container" class="space-y-3">
+                                <!-- Pudding items will be dynamically inserted here -->
+                            </div>
+                            <div class="mt-6 text-center">
+                                <button id="submit-pudding-btn" type="button" class="w-full sm:w-auto inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                    Submit Pudding Orders
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calendar Display -->
+                    <div id="calendar-container" class="border-t mt-8 pt-8">
+                        <div id='calendar'></div>
+                    </div>
+                </div>
+            </div>
         </main>
+
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const weeklyOrdersContainer = document.getElementById('weekly-orders-container');
-            const schoolSelector = document.getElementById('school-selector');
-            const weeklyOrdersTbody = document.getElementById('weekly-orders-tbody');
-            const weeklyOrdersTfoot = document.getElementById('weekly-orders-tfoot');
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuListContainer = document.getElementById('menu-list-container');
+            const puddingListContainer = document.getElementById('pudding-list-container');
+            const calendarEl = document.getElementById('calendar');
+            const monthSelect = document.getElementById('month-select');
+            const yearSelect = document.getElementById('year-select');
+            const submitMenuBtn = document.getElementById('submit-menu-btn');
+            const submitPuddingBtn = document.getElementById('submit-pudding-btn');
 
-            const schoolData = {
-                "Dollar Nursery": [
-                    { day: 'Monday', std: 2, alt: 0, spc: '-' },
-                    { day: 'Tuesday', std: 3, alt: 1, spc: '1 Halal' },
-                    { day: 'Wednesday', std: 2, alt: 2, spc: '-' },
-                    { day: 'Thursday', std: 1, alt: 1, spc: '-' },
-                    { day: 'Friday', std: 2, alt: 0, spc: '-' },
-                    { day: 'Saturday', std: 3, alt: 1, spc: '-' },
-                    { day: 'Sunday', std: 1, alt: 0, spc: '-' },
-                ],
-                "Old Doune Road": [
-                    { day: 'Monday', std: 3, alt: 1, spc: '-' },
-                    { day: 'Tuesday', std: 5, alt: 0, spc: '-' },
-                    { day: 'Wednesday', std: 3, alt: 3, spc: '-' },
-                    { day: 'Thursday', std: 4, alt: 2, spc: '-' },
-                    { day: 'Friday', std: 3, alt: 1, spc: '-' },
-                    { day: 'Saturday', std: 4, alt: 1, spc: '-' },
-                    { day: 'Sunday', std: 2, alt: 0, spc: '-' },
-                ],
-                "Lecropt Nursery": [
-                    { day: 'Monday', std: 5, alt: 1, spc: '-' },
-                    { day: 'Tuesday', std: 4, alt: 0, spc: '-' },
-                    { day: 'Wednesday', std: 2, alt: 2, spc: '-' },
-                    { day: 'Thursday', std: 3, alt: 2, spc: '-' },
-                    { day: 'Friday', std: 2, alt: 1, spc: '-' },
-                    { day: 'Saturday', std: 4, alt: 1, spc: '-' },
-                    { day: 'Sunday', std: 3, alt: 1, spc: '-' },
-                ]
-                // ... add more schools data as needed
+            const flatpickrMenuInstances = [];
+            const flatpickrPuddingInstances = [];
+            let menuEvents = [];
+            let puddingEvents = [];
+
+            // --- Data Sources ---
+            const menuData = [
+                'Classic Burger', 'Margherita Pizza', 'Club Sandwich', 'Veggie Supreme Pizza',
+                'Grilled Chicken Sandwich', 'Spaghetti Carbonara', 'Caesar Salad', 'Fish and Chips',
+                'Chicken Alfredo', 'BBQ Ribs', 'Tuna Melt Sandwich', 'Pepperoni Pizza',
+                'Vegetable Stir-fry', 'Beef Tacos', 'Mushroom Risotto'
+            ];
+            const puddingData = [
+                'Chocolate Mousse', 'Tiramisu', 'Fruit Salad', 'Chocolate Brownie', 'Kulfi',
+                'Panna Cotta', 'Yogurt Parfait', 'Gelato', 'Cookie', 'Apple Pie', 'Choco Lava Cake',
+                'Classic Sundae', 'Rice Pudding', 'Jelly', 'Flan'
+            ];
+
+            // --- Initialize FullCalendar ---
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: { left: 'prev,next today', center: 'title', right: '' },
+                editable: false, selectable: false, events: []
+            });
+            calendar.render();
+
+            // --- Populate and Handle Month/Year Dropdowns ---
+            const populateSelectors = () => {
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const currentMonth = now.getMonth();
+
+                const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                months.forEach((month, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = month;
+                    monthSelect.appendChild(option);
+                });
+                monthSelect.value = currentMonth;
+
+                for (let i = currentYear - 5; i <= currentYear + 5; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i;
+                    yearSelect.appendChild(option);
+                }
+                yearSelect.value = currentYear;
+            };
+
+            const navigateCalendar = () => {
+                const year = parseInt(yearSelect.value);
+                const month = parseInt(monthSelect.value);
+                calendar.gotoDate(new Date(year, month));
             };
             
-            // Populate dropdown
-            const schools = ["Dollar Nursery", "Old Doune Road", "Lecropt Nursery", "Fossoplay", "Rosemount Kinross", "Pitreavie Playgroup", "Cranley Lanark U2's", "Cranley Lanark Rd Juniors", "Cranley Lanark Rd Seniors", "Cranley Buckstone U2's", "Cranley Buckstone JR's", "Cranley Buckstone SR's"];
-            schools.forEach(school => {
-                const option = document.createElement('option');
-                option.value = school;
-                option.textContent = school;
-                schoolSelector.appendChild(option);
-            });
-            
-            // Function to parse numeric values from special orders string
-            function parseSpecialOrders(text) {
-                if (!text || text === '-' || text.toLowerCase().includes('-')) {
-                    return 0;
-                }
-                const numbers = text.match(/\b\d+\b/g);
-                if (!numbers) {
-                    return 0;
-                }
-                return numbers.reduce((sum, num) => sum + parseInt(num, 10), 0);
-            }
+            monthSelect.addEventListener('change', navigateCalendar);
+            yearSelect.addEventListener('change', navigateCalendar);
 
-            // Function to render table
-            function renderTable(schoolName) {
-                weeklyOrdersTbody.innerHTML = ''; // Clear existing table body
-                weeklyOrdersTfoot.innerHTML = ''; // Clear existing table foot
-                
-                const data = schoolData[schoolName] || []; // Default to empty array if no data
-                
-                let totalStd = 0;
-                let totalAlt = 0;
-                let totalSpc = 0;
 
-                data.forEach(row => {
-                    const specialCount = parseSpecialOrders(row.spc);
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td class="py-3 px-4">${row.day}</td>
-                        <td class="py-3 px-4">${row.std}</td>
-                        <td class="py-3 px-4">${row.alt}</td>
-                        <td class="py-3 px-4">${row.spc}</td>
-                    `;
-                    weeklyOrdersTbody.appendChild(tr);
-
-                    // Calculate totals
-                    totalStd += row.std;
-                    totalAlt += row.alt;
-                    totalSpc += specialCount;
+            // --- Function to update disabled dates for menu pickers ---
+            const updateDisabledDates = (instances) => {
+                const allSelectedDates = new Set();
+                instances.forEach(fp => {
+                    fp.selectedDates.forEach(date => {
+                        allSelectedDates.add(fp.formatDate(date, "Y-m-d"));
+                    });
                 });
-                
-                // Render footer with totals
-                if (data.length > 0) {
-                    const tfootTr = document.createElement('tr');
-                    tfootTr.className = 'font-bold bg-gray-50 text-gray-800';
-                    tfootTr.innerHTML = `
-                        <td class="py-3 px-4">Weekly Total</td>
-                        <td class="py-3 px-4">${totalStd}</td>
-                        <td class="py-3 px-4">${totalAlt}</td>
-                        <td class="py-3 px-4">${totalSpc}</td>
-                    `;
-                    weeklyOrdersTfoot.appendChild(tfootTr);
-                }
-            }
 
-            // Event listener for dropdown change
-            schoolSelector.addEventListener('change', (e) => {
-                if (e.target.value) {
-                    weeklyOrdersContainer.classList.remove('hidden');
-                    renderTable(e.target.value);
-                } else {
-                    weeklyOrdersContainer.classList.add('hidden');
-                }
+                instances.forEach(fp => {
+                    const ownSelectedDates = new Set(fp.selectedDates.map(d => fp.formatDate(d, "Y-m-d")));
+                    const datesToDisable = [...allSelectedDates].filter(date => !ownSelectedDates.has(date));
+
+                    fp.set('disable', [
+                        (date) => (date.getDay() === 0 || date.getDay() === 6),
+                        ...datesToDisable
+                    ]);
+                });
+            };
+
+            // --- Generic function to render a list of items ---
+            const renderList = (container, data, instances, type) => {
+                data.forEach(itemName => {
+                    const card = document.createElement('div');
+                    card.className = 'item-card border p-3 rounded-lg bg-gray-50';
+                    card.dataset.itemName = itemName;
+                    card.dataset.itemType = type;
+
+                    card.innerHTML = `
+                        <h3 class="font-semibold text-gray-800">${itemName}</h3>
+                        <div>
+                            <input type="text" class="multi-date-picker w-full rounded-md border-gray-300 shadow-sm" readonly placeholder="Click to select dates...">
+                        </div>
+                    `;
+                    container.appendChild(card);
+
+                    const datePicker = card.querySelector('.multi-date-picker');
+                    
+                    let config = {
+                        mode: "multiple",
+                        dateFormat: "Y-m-d",
+                        disable: [(date) => (date.getDay() === 0 || date.getDay() === 6)],
+                    };
+
+                    if (type === 'Menu') {
+                        config.onClose = (selectedDates, dateStr, instance) => {
+                            const days = selectedDates.map(date => date.getDate());
+                            instance.input.value = days.join(', ');
+                            updateDisabledDates(instances);
+                        };
+                    } 
+                    
+                    const instance = flatpickr(datePicker, config);
+                    instances.push(instance);
+                });
+            };
+            
+            // --- Function to re-render all events on the calendar ---
+            const renderCalendarEvents = () => {
+                const allEvents = [...menuEvents, ...puddingEvents];
+                calendar.getEventSources().forEach(source => source.remove());
+                calendar.addEventSource(allEvents);
+            };
+
+            // --- Event Listener for Menu Submission ---
+            submitMenuBtn.addEventListener('click', () => {
+                menuEvents = []; // Clear previous menu events
+                const menuCards = document.querySelectorAll('#menu-list-container .item-card');
+                
+                menuCards.forEach(card => {
+                    const itemName = card.dataset.itemName;
+                    const itemType = card.dataset.itemType;
+                    const dateInput = card.querySelector('.multi-date-picker');
+                    const fpInstance = dateInput._flatpickr;
+                    
+                    if (fpInstance.selectedDates.length > 0) {
+                        fpInstance.selectedDates.forEach(dateObj => {
+                            menuEvents.push({
+                                title: `${itemType}: ${itemName}`,
+                                start: fpInstance.formatDate(dateObj, "Y-m-d"),
+                                allDay: true
+                            });
+                        });
+                    }
+                });
+                renderCalendarEvents();
             });
+
+            // --- Event Listener for Pudding Submission ---
+            submitPuddingBtn.addEventListener('click', () => {
+                puddingEvents = []; // Clear previous pudding events
+                const puddingCards = document.querySelectorAll('#pudding-list-container .item-card');
+
+                puddingCards.forEach(card => {
+                    const itemName = card.dataset.itemName;
+                    const itemType = card.dataset.itemType;
+                    const dateInput = card.querySelector('.multi-date-picker');
+                    const fpInstance = dateInput._flatpickr;
+                    
+                    if (fpInstance.selectedDates.length > 0) {
+                        fpInstance.selectedDates.forEach(dateObj => {
+                            puddingEvents.push({
+                                title: `${itemType}: ${itemName}`,
+                                start: fpInstance.formatDate(dateObj, "Y-m-d"),
+                                allDay: true
+                            });
+                        });
+                    }
+                });
+                renderCalendarEvents();
+            });
+
+            // --- Initial Load ---
+            populateSelectors();
+            renderList(menuListContainer, menuData, flatpickrMenuInstances, 'Menu');
+            renderList(puddingListContainer, puddingData, flatpickrPuddingInstances, 'Pudding');
 
         });
     </script>
+
 </body>
 </html>
 
