@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Font for a clean look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -61,7 +61,7 @@
                 </div>
                 <div class="mt-4 sm:mt-0">
                         <select id="school-selector" class="w-full p-2 sm:w-auto rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                            <option value="" selected>Select a School</option>
+                            <option value="">Select a School</option>
                             <!-- School options will be populated by JS -->
                         </select>
                     </div>
@@ -133,10 +133,9 @@
                                 <tr>
                                     <th rowspan="2" class="py-3 px-2 text-left">School Name</th>
                                     <th colspan="3" class="py-3 px-2 border-l">Monday</th><th colspan="3" class="py-3 px-2 border-l">Tuesday</th><th colspan="3" class="py-3 px-2 border-l">Wednesday</th>
-                                    <th colspan="3" class="py-3 px-2 border-l">Thursday</th><th colspan="3" class="py-3 px-2 border-l">Friday</th><th colspan="3" class="py-3 px-2 border-l">Saturday</th>
+                                    <th colspan="3" class="py-3 px-2 border-l">Thursday</th><th colspan="3" class="py-3 px-2 border-l">Friday</th>
                                 </tr>
                                 <tr>
-                                    <th class="font-medium px-1 border-l">Std</th><th class="font-medium px-1">Alt</th><th class="font-medium px-1">Spc</th>
                                     <th class="font-medium px-1 border-l">Std</th><th class="font-medium px-1">Alt</th><th class="font-medium px-1">Spc</th>
                                     <th class="font-medium px-1 border-l">Std</th><th class="font-medium px-1">Alt</th><th class="font-medium px-1">Spc</th>
                                     <th class="font-medium px-1 border-l">Std</th><th class="font-medium px-1">Alt</th><th class="font-medium px-1">Spc</th>
@@ -146,24 +145,23 @@
                             </thead>
                             <tbody class="divide-y">
                                 <!-- Dummy Data Rows -->
-                                <tr><td class="py-2 px-2 text-left">Dollar Nursery</td><td class="border-l">30</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Old Doune Road</td><td class="border-l">36</td><td>2</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Lecropt Nursery</td><td class="border-l">32</td><td>1</td><td>1</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Fossoplay</td><td class="border-l">16</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Rosemount Kinross</td><td class="border-l">32</td><td>2</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Pitreavie Playgroup</td><td class="border-l">7</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Cranley Lanark U2's</td><td class="border-l">8</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Cranley Lanark Rd Juniors</td><td class="border-l">5</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Cranley Lanark Rd Seniors</td><td class="border-l">11</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Cranley Buckstone U2's</td><td class="border-l">15</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Cranley Buckstone JR's</td><td class="border-l">12</td><td>0</td><td>1</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Cranley Buckstone SR's</td><td class="border-l">18</td><td>1</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td><td class="border-l">0</td><td>0</td><td>0</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Dollar Nursery</td><td class="border-l">30</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Old Doune Road</td><td class="border-l">36</td><td>2</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Lecropt Nursery</td><td class="border-l">32</td><td>1</td><td><span class="text-xs">1 halal</span></td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Fossoplay</td><td class="border-l">16</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Rosemount Kinross</td><td class="border-l">32</td><td>2</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Pitreavie Playgroup</td><td class="border-l">7</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Cranley Lanark U2's</td><td class="border-l">8</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Cranley Lanark Rd Juniors</td><td class="border-l">5</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Cranley Lanark Rd Seniors</td><td class="border-l">11</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Cranley Buckstone U2's</td><td class="border-l">15</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Cranley Buckstone JR's</td><td class="border-l">12</td><td>0</td><td><span class="text-xs">1 no tomato + real</span></td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Cranley Buckstone SR's</td><td class="border-l">18</td><td>1</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
                             </tbody>
                              <tfoot>
                                 <tr class="font-bold bg-gray-50 text-gray-800">
                                     <td class="py-3 px-2 text-left">All Schools Total</td>
                                     <td class="border-l">222</td><td>6</td><td>2</td>
-                                    <td class="border-l"></td><td></td><td></td>
                                     <td class="border-l"></td><td></td><td></td>
                                     <td class="border-l"></td><td></td><td></td>
                                     <td class="border-l"></td><td></td><td></td>
@@ -288,6 +286,13 @@
                     weeklyOrdersContainer.classList.add('hidden');
                 }
             });
+
+            // Set default school on page load
+            if (schools.length > 0) {
+                schoolSelector.value = schools[0];
+                weeklyOrdersContainer.classList.remove('hidden');
+                renderTable(schools[0]);
+            }
 
         });
     </script>
