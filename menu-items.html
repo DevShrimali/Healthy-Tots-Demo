@@ -83,7 +83,7 @@
 
         <!-- Main Content -->
         <main class="flex-1 overflow-y-auto">
-            <div class="p-4 sm:p-6 lg:p-10">
+            <div class="p-4 sm:p-6 lg:p-10 space-y-8">
                 <div class="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
                     <!-- Form Header -->
                     <h1 class="text-3xl font-bold text-gray-900 mb-2">Create Menu Item</h1>
@@ -128,6 +128,42 @@
                         </div>
                     </form>
                 </div>
+
+                <div class="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
+                    <!-- Form Header -->
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Alternate menu items</h1>
+                    <p class="text-gray-600 mb-8">Add a new alternate item to the menu database.</p>
+
+                    <form id="menu-item-form-alt" action="#" method="POST" class="space-y-6">
+                        <!-- Menu Item Name -->
+                        <div class="relative">
+                            <label for="menu-item-search-alt" class="block text-sm font-medium text-gray-700">Menu Item Name</label>
+                            <input type="text" id="menu-item-search-alt" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Search or add menu item...">
+                            <div id="menu-item-dropdown-alt" class="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg hidden dropdown-content">
+                                <!-- Options will be populated by JS -->
+                            </div>
+                        </div>
+                        
+                        <!-- Ingredients -->
+                        <div class="relative">
+                            <label for="ingredients-search-alt" class="block text-sm font-medium text-gray-700">Ingredients</label>
+                            <div id="ingredients-tags-alt" class="mt-2">
+                                <!-- Selected ingredient tags will appear here -->
+                            </div>
+                            <input type="text" id="ingredients-search-alt" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Search or add new ingredients...">
+                            <div id="ingredients-dropdown-alt" class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg hidden dropdown-content">
+                                <!-- Options will be populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-4 text-right">
+                            <button type="submit" class="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                Submit Item
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </main>
     </div>
@@ -149,154 +185,166 @@
             };
             
             let allIngredients = [...new Set(Object.values(menuItemsWithIngredients).flat())];
-            let selectedIngredients = new Set();
+            
+            // --- SETUP FOR STANDARD MENU ---
+            setupMenuCard(
+                'menu-item-search',
+                'menu-item-dropdown',
+                'ingredients-search',
+                'ingredients-dropdown',
+                'ingredients-tags',
+                'menu-item-form'
+            );
 
-            // --- MENU ITEM DROPDOWN LOGIC ---
-            const menuItemSearch = document.getElementById('menu-item-search');
-            const menuItemDropdown = document.getElementById('menu-item-dropdown');
+            // --- SETUP FOR ALTERNATE MENU ---
+            setupMenuCard(
+                'menu-item-search-alt',
+                'menu-item-dropdown-alt',
+                'ingredients-search-alt',
+                'ingredients-dropdown-alt',
+                'ingredients-tags-alt',
+                'menu-item-form-alt'
+            );
 
-            const renderMenuItemDropdown = (filter = '') => {
-                const menuItems = Object.keys(menuItemsWithIngredients);
-                const filteredItems = menuItems.filter(item => item.toLowerCase().includes(filter.toLowerCase()));
-                menuItemDropdown.innerHTML = '';
-                
-                if (filteredItems.length > 0) {
-                    filteredItems.forEach(item => {
-                        const option = document.createElement('a');
-                        option.href = '#';
-                        option.textContent = item;
-                        option.className = 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
-                        option.onclick = (e) => {
+            function setupMenuCard(menuSearchId, menuDropdownId, ingredientsSearchId, ingredientsDropdownId, ingredientsTagsId, formId) {
+                let selectedIngredients = new Set();
+
+                const menuItemSearch = document.getElementById(menuSearchId);
+                const menuItemDropdown = document.getElementById(menuDropdownId);
+                const ingredientsSearch = document.getElementById(ingredientsSearchId);
+                const ingredientsDropdown = document.getElementById(ingredientsDropdownId);
+                const ingredientsTagsContainer = document.getElementById(ingredientsTagsId);
+
+                const renderMenuItemDropdown = (filter = '') => {
+                    const menuItems = Object.keys(menuItemsWithIngredients);
+                    const filteredItems = menuItems.filter(item => item.toLowerCase().includes(filter.toLowerCase()));
+                    menuItemDropdown.innerHTML = '';
+                    
+                    if (filteredItems.length > 0) {
+                        filteredItems.forEach(item => {
+                            const option = document.createElement('a');
+                            option.href = '#';
+                            option.textContent = item;
+                            option.className = 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
+                            option.onclick = (e) => {
+                                e.preventDefault();
+                                menuItemSearch.value = item;
+                                menuItemDropdown.classList.add('hidden');
+                                const ingredients = menuItemsWithIngredients[item] || [];
+                                selectedIngredients = new Set(ingredients);
+                                renderIngredientTags();
+                            };
+                            menuItemDropdown.appendChild(option);
+                        });
+                    }
+
+                    if (filter && !menuItems.find(c => c.toLowerCase() === filter.toLowerCase())) {
+                        const addItem = document.createElement('a');
+                        addItem.href = '#';
+                        addItem.innerHTML = `Add "<strong>${filter}</strong>"`;
+                        addItem.className = 'block px-4 py-2 text-sm text-indigo-600 hover:bg-gray-100';
+                        addItem.onclick = (e) => {
                             e.preventDefault();
-                            menuItemSearch.value = item;
+                            menuItemsWithIngredients[filter] = [];
+                            menuItemSearch.value = filter;
                             menuItemDropdown.classList.add('hidden');
-                            // Auto-populate ingredients
-                            const ingredients = menuItemsWithIngredients[item] || [];
-                            selectedIngredients = new Set(ingredients);
+                            selectedIngredients.clear();
                             renderIngredientTags();
                         };
-                        menuItemDropdown.appendChild(option);
-                    });
-                }
-
-                if (filter && !menuItems.find(c => c.toLowerCase() === filter.toLowerCase())) {
-                    const addItem = document.createElement('a');
-                    addItem.href = '#';
-                    addItem.innerHTML = `Add "<strong>${filter}</strong>"`;
-                    addItem.className = 'block px-4 py-2 text-sm text-indigo-600 hover:bg-gray-100';
-                    addItem.onclick = (e) => {
-                        e.preventDefault();
-                        menuItemsWithIngredients[filter] = []; // Add new item with empty ingredients
-                        menuItemSearch.value = filter;
-                        menuItemDropdown.classList.add('hidden');
-                        selectedIngredients.clear();
-                        renderIngredientTags();
-                    };
-                    menuItemDropdown.appendChild(addItem);
-                }
-                
-                menuItemDropdown.classList.toggle('hidden', menuItemDropdown.children.length === 0);
-            };
-
-            menuItemSearch.addEventListener('input', () => renderMenuItemDropdown(menuItemSearch.value));
-            menuItemSearch.addEventListener('focus', () => renderMenuItemDropdown(menuItemSearch.value));
-            document.addEventListener('click', (e) => {
-                if (!menuItemSearch.parentElement.contains(e.target)) {
-                    menuItemDropdown.classList.add('hidden');
-                }
-            });
-
-
-            // --- INGREDIENTS DROPDOWN LOGIC ---
-            const ingredientsSearch = document.getElementById('ingredients-search');
-            const ingredientsDropdown = document.getElementById('ingredients-dropdown');
-            const ingredientsTagsContainer = document.getElementById('ingredients-tags');
-
-            const renderIngredientTags = () => {
-                ingredientsTagsContainer.innerHTML = '';
-                selectedIngredients.forEach(ingredient => {
-                    const tag = document.createElement('span');
-                    tag.className = 'tag';
-                    tag.textContent = ingredient;
+                        menuItemDropdown.appendChild(addItem);
+                    }
                     
-                    const removeBtn = document.createElement('span');
-                    removeBtn.className = 'tag-remove';
-                    removeBtn.innerHTML = '&times;';
-                    removeBtn.onclick = () => {
-                        selectedIngredients.delete(ingredient);
-                        renderIngredientTags();
-                    };
-                    
-                    tag.appendChild(removeBtn);
-                    ingredientsTagsContainer.appendChild(tag);
-                });
-            };
-
-            const addIngredient = (ingredient) => {
-                if (!selectedIngredients.has(ingredient)) {
-                    selectedIngredients.add(ingredient);
-                    renderIngredientTags();
-                }
-                ingredientsSearch.value = '';
-                ingredientsDropdown.classList.add('hidden');
-                ingredientsSearch.focus();
-            };
-
-            const renderIngredientsDropdown = (filter = '') => {
-                const availableIngredients = allIngredients.filter(i => 
-                    !selectedIngredients.has(i) && 
-                    i.toLowerCase().includes(filter.toLowerCase())
-                );
-                ingredientsDropdown.innerHTML = '';
-
-                if (availableIngredients.length > 0) {
-                    availableIngredients.forEach(ingredient => {
-                        const item = document.createElement('a');
-                        item.href = '#';
-                        item.textContent = ingredient;
-                        item.className = 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
-                        item.onclick = (e) => {
-                            e.preventDefault();
-                            addIngredient(ingredient);
-                        };
-                        ingredientsDropdown.appendChild(item);
-                    });
-                }
-                
-                if (filter && !allIngredients.find(i => i.toLowerCase() === filter.toLowerCase())) {
-                    const addItem = document.createElement('a');
-                    addItem.href = '#';
-                    addItem.innerHTML = `Add "<strong>${filter}</strong>"`;
-                    addItem.className = 'block px-4 py-2 text-sm text-indigo-600 hover:bg-gray-100';
-                    addItem.onclick = (e) => {
-                        e.preventDefault();
-                        allIngredients.push(filter);
-                        addIngredient(filter);
-                    };
-                    ingredientsDropdown.appendChild(addItem);
-                }
-                
-                ingredientsDropdown.classList.toggle('hidden', ingredientsDropdown.children.length === 0);
-            };
-
-            ingredientsSearch.addEventListener('input', () => renderIngredientsDropdown(ingredientsSearch.value));
-            ingredientsSearch.addEventListener('focus', () => renderIngredientsDropdown(ingredientsSearch.value));
-             document.addEventListener('click', (e) => {
-                if (!ingredientsSearch.parentElement.contains(e.target)) {
-                    ingredientsDropdown.classList.add('hidden');
-                }
-            });
-
-
-            // --- FORM SUBMISSION ---
-            document.getElementById('menu-item-form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const formData = {
-                    name: menuItemSearch.value,
-                    ingredients: Array.from(selectedIngredients)
+                    menuItemDropdown.classList.toggle('hidden', menuItemDropdown.children.length === 0);
                 };
-                console.log('Form Submitted:', formData);
-                alert('Menu item submitted! Check the console for the data.');
+
+                menuItemSearch.addEventListener('input', () => renderMenuItemDropdown(menuItemSearch.value));
+                menuItemSearch.addEventListener('focus', () => renderMenuItemDropdown(menuItemSearch.value));
+
+                const renderIngredientTags = () => {
+                    ingredientsTagsContainer.innerHTML = '';
+                    selectedIngredients.forEach(ingredient => {
+                        const tag = document.createElement('span');
+                        tag.className = 'tag';
+                        tag.textContent = ingredient;
+                        
+                        const removeBtn = document.createElement('span');
+                        removeBtn.className = 'tag-remove';
+                        removeBtn.innerHTML = '&times;';
+                        removeBtn.onclick = () => {
+                            selectedIngredients.delete(ingredient);
+                            renderIngredientTags();
+                        };
+                        
+                        tag.appendChild(removeBtn);
+                        ingredientsTagsContainer.appendChild(tag);
+                    });
+                };
+
+                const addIngredient = (ingredient) => {
+                    if (!selectedIngredients.has(ingredient)) {
+                        selectedIngredients.add(ingredient);
+                        renderIngredientTags();
+                    }
+                    ingredientsSearch.value = '';
+                    ingredientsDropdown.classList.add('hidden');
+                    ingredientsSearch.focus();
+                };
+
+                const renderIngredientsDropdown = (filter = '') => {
+                    const availableIngredients = allIngredients.filter(i => 
+                        !selectedIngredients.has(i) && 
+                        i.toLowerCase().includes(filter.toLowerCase())
+                    );
+                    ingredientsDropdown.innerHTML = '';
+
+                    if (availableIngredients.length > 0) {
+                        availableIngredients.forEach(ingredient => {
+                            const item = document.createElement('a');
+                            item.href = '#';
+                            item.textContent = ingredient;
+                            item.className = 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
+                            item.onclick = (e) => {
+                                e.preventDefault();
+                                addIngredient(ingredient);
+                            };
+                            ingredientsDropdown.appendChild(item);
+                        });
+                    }
+                    
+                    if (filter && !allIngredients.find(i => i.toLowerCase() === filter.toLowerCase())) {
+                        const addItem = document.createElement('a');
+                        addItem.href = '#';
+                        addItem.innerHTML = `Add "<strong>${filter}</strong>"`;
+                        addItem.className = 'block px-4 py-2 text-sm text-indigo-600 hover:bg-gray-100';
+                        addItem.onclick = (e) => {
+                            e.preventDefault();
+                            allIngredients.push(filter);
+                            addIngredient(filter);
+                        };
+                        ingredientsDropdown.appendChild(addItem);
+                    }
+                    
+                    ingredientsDropdown.classList.toggle('hidden', ingredientsDropdown.children.length === 0);
+                };
+
+                ingredientsSearch.addEventListener('input', () => renderIngredientsDropdown(ingredientsSearch.value));
+                ingredientsSearch.addEventListener('focus', () => renderIngredientsDropdown(ingredientsSearch.value));
+                
+                document.getElementById(formId).addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const formData = {
+                        name: menuItemSearch.value,
+                        ingredients: Array.from(selectedIngredients)
+                    };
+                    console.log(`Form ${formId} Submitted:`, formData);
+                    alert('Menu item submitted! Check the console for the data.');
+                });
+            }
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.relative')) {
+                    document.querySelectorAll('.dropdown-content').forEach(d => d.classList.add('hidden'));
+                }
             });
         });
     </script>
