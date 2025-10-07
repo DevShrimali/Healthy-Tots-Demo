@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Healthy Tots - Demo </title>
-    <!-- Tailwind CSS for styling -->
+    <title>Login - Healthy Tots</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Font for a clean look -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -16,286 +13,68 @@
         }
     </style>
 </head>
-<body class="bg-gray-100">
 
-    <div class="flex h-screen bg-gray-100">
-        <!-- Sidebar -->
-        <aside class="w-64 flex-shrink-0 bg-white text-gray-600 flex flex-col border-r">
-            <!-- Logo -->
-            <div class="h-20 flex items-center justify-center px-4 border-b">
-                 <div class="w-20 h-20 mr-3 rounded-full flex items-center justify-center">
-                   <img src="assets/logo/logo.png" alt="">
-                 </div>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-md mx-auto">
+        <!-- Logo Section -->
+        <div class="text-center mb-8">
+            <img src="assets/logo/logo.png" width="200px" alt="Healthy Tots Logo" class="mx-auto">
+        </div>
+
+        <!-- Login Form Card -->
+        <div class="bg-white p-8 rounded-xl shadow-md">
+            <div class="text-left mb-8">
+                <h1 class="text-2xl font-bold text-gray-900">Welcome back</h1>
+                <p class="text-gray-500 mt-2">Enter your credentials to access your account</p>
             </div>
-            <!-- Navigation Links -->
-            <nav class="flex-1 px-4 py-6 space-y-2">
-                <a href="index.html" class="flex items-center px-4 py-2 rounded-md bg-red-500 text-white font-medium">
-                    <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
-                    Dashboard
-                </a>
-                <a href="calender.html" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-200 font-medium">
-                    <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    Calendar
-                </a>
+
+            <form id="loginForm">
+                <div class="space-y-6">
+                    <!-- Email Input -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="email" name="email" placeholder="name@admin.com" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-150 ease-in-out">
+                    </div>
+
+                    <!-- Password Input -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-150 ease-in-out">
+                    </div>
+
+                    <!-- Sign In Button -->
+                    <div>
+                        <button
+                            class="w-full bg-red-600 text-white font-semibold py-2.5 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out">
+                            <a href="dashboard-admin.html" type="submit"> Sign in </a>
+                        </button>
+
+                    </div>
+
+                </div>
+            </form>
             
-                <a href="menu-items.html" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-200 font-medium">
-                    <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                    Menu Items
-                </a>
-            </nav>
-            <!-- Logout Button -->
-            <div class="p-4 mt-auto border-t">
-                <a href="login.html" class="flex items-center px-4 py-2 rounded-md hover:bg-gray-200 font-medium">
-                    <svg class="h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    Logout
-                </a>
-            </div>
-        </aside>
 
-        <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
-             <div class="p-4 sm:p-6 lg:p-10 space-y-8">
-                <div class="flex flex-col sm:flex-row justify-between sm:items-center">
-                    <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
-                    
-                </div>
-                <div class="mt-4 sm:mt-0">
-                        <select id="school-selector" class="w-full p-2 sm:w-auto rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                            <option value="">Select a School</option>
-                            <!-- School options will be populated by JS -->
-                        </select>
-                    </div>
-                <!-- School-wise weekly orders -->
-                <div id="weekly-orders-container" class="bg-white p-6 rounded-lg shadow-sm hidden">
-                    <h2 class="text-xl font-semibold mb-4">School-wise weekly orders</h2>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full text-sm">
-                            <thead class="bg-gray-50 text-gray-500 uppercase">
-                                <tr>
-                                    <th class="py-3 px-4 text-left">Day</th>
-                                    <th class="py-3 px-4 text-left">Standard</th>
-                                    <th class="py-3 px-4 text-left">Alt</th>
-                                    <th class="py-3 px-4 text-left">Special</th>
-                                </tr>
-                            </thead>
-                            <tbody id="weekly-orders-tbody" class="divide-y">
-                                <!-- Data will be populated by JS -->
-                            </tbody>
-                             <tfoot id="weekly-orders-tfoot">
-                                <!-- Total row will be populated by JS -->
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Today's All School Orders -->
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <h2 class="text-xl font-semibold mb-4">Today's All School Orders</h2>
-                    <div class="overflow-x-auto">
-                         <table class="min-w-full text-sm">
-                            <thead class="bg-gray-50 text-gray-500 uppercase">
-                                <tr>
-                                    <th class="py-3 px-4 text-left">School</th>
-                                    <th class="py-3 px-4 text-left">Standard</th>
-                                    <th class="py-3 px-4 text-left">Alt</th>
-                                    <th class="py-3 px-4 text-left">Special</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y">
-                                <tr><td class="py-3 px-4">Dollar Nursery</td><td class="py-3 px-4">30</td><td class="py-3 px-4">0</td><td class="py-3 px-4">-</td></tr>
-                                <tr><td class="py-3 px-4">Old Doune Road</td><td class="py-3 px-4">36</td><td class="py-3 px-4">2</td><td class="py-3 px-4">-</td></tr>
-                                <tr><td class="py-3 px-4">Lecropt Nursery</td><td class="py-3 px-4">32</td><td class="py-3 px-4">1</td><td class="py-3 px-4">1 halal</td></tr>
-                                <tr><td class="py-3 px-4">Fossoplay</td><td class="py-3 px-4">16</td><td class="py-3 px-4">0</td><td class="py-3 px-4">-</td></tr>
-                                <tr><td class="py-3 px-4">Rosemount Kinross</td><td class="py-3 px-4">32</td><td class="py-3 px-4">2</td><td class="py-3 px-4">-</td></tr>
-                                <tr><td class="py-3 px-4">Pitreavie Playgroup</td><td class="py-3 px-4">7</td><td class="py-3 px-4">0</td><td class="py-3 px-4">-</td></tr>
-                                <tr><td class="py-3 px-4">Cranley Lanark U2's</td><td class="py-3 px-4">8</td><td class="py-3 px-4">0</td><td class="py-3 px-4">-</td></tr>
-                                <tr><td class="py-3 px-4">Cranley Lanark Rd Juniors</td><td class="py-3 px-4">5</td><td class="py-3 px-4">0</td><td class="py-3 px-4">-</td></tr>
-                                <tr><td class="py-3 px-4">Cranley Lanark Rd Seniors</td><td class="py-3 px-4">11</td><td class="py-3 px-4">0</td><td class="py-3 px-4">-</td></tr>
-                                <tr><td class="py-3 px-4">Cranley Buckstone U2's</td><td class="py-3 px-4">15</td><td class="py-3 px-4">0</td><td class="py-3 px-4">-</td></tr>
-                                <tr><td class="py-3 px-4">Cranley Buckstone JR's</td><td class="py-3 px-4">12</td><td class="py-3 px-4">0</td><td class="py-3 px-4">1 no tomato + real</td></tr>
-                                <tr><td class="py-3 px-4">Cranley Buckstone SR's</td><td class="py-3 px-4">18</td><td class="py-3 px-4">1</td><td class="py-3 px-4">-</td></tr>
-                            </tbody>
-                            <tfoot>
-                                <tr class="font-bold bg-gray-50 text-gray-800">
-                                    <td class="py-3 px-4">All Schools Total</td><td class="py-3 px-4">174</td><td class="py-3 px-4">6</td><td class="py-3 px-4">2</td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- School-wise Weekly Summary -->
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <h2 class="text-xl font-semibold mb-4">School-wise Weekly Summary</h2>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full text-sm text-center">
-                            <thead class="bg-gray-50 text-gray-500 uppercase">
-                                <tr>
-                                    <th rowspan="2" class="py-3 px-2 text-left">School Name</th>
-                                    <th colspan="3" class="py-3 px-2 border-l">Monday</th><th colspan="3" class="py-3 px-2 border-l">Tuesday</th><th colspan="3" class="py-3 px-2 border-l">Wednesday</th>
-                                    <th colspan="3" class="py-3 px-2 border-l">Thursday</th><th colspan="3" class="py-3 px-2 border-l">Friday</th>
-                                </tr>
-                                <tr>
-                                    <th class="font-medium px-1 border-l">Std</th><th class="font-medium px-1">Alt</th><th class="font-medium px-1">Spc</th>
-                                    <th class="font-medium px-1 border-l">Std</th><th class="font-medium px-1">Alt</th><th class="font-medium px-1">Spc</th>
-                                    <th class="font-medium px-1 border-l">Std</th><th class="font-medium px-1">Alt</th><th class="font-medium px-1">Spc</th>
-                                    <th class="font-medium px-1 border-l">Std</th><th class="font-medium px-1">Alt</th><th class="font-medium px-1">Spc</th>
-                                    <th class="font-medium px-1 border-l">Std</th><th class="font-medium px-1">Alt</th><th class="font-medium px-1">Spc</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y">
-                                <!-- Dummy Data Rows -->
-                                <tr><td class="py-2 px-2 text-left">Dollar Nursery</td><td class="border-l">30</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Old Doune Road</td><td class="border-l">36</td><td>2</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Lecropt Nursery</td><td class="border-l">32</td><td>1</td><td><span class="text-xs">1 halal</span></td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Fossoplay</td><td class="border-l">16</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Rosemount Kinross</td><td class="border-l">32</td><td>2</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Pitreavie Playgroup</td><td class="border-l">7</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Cranley Lanark U2's</td><td class="border-l">8</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Cranley Lanark Rd Juniors</td><td class="border-l">5</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Cranley Lanark Rd Seniors</td><td class="border-l">11</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Cranley Buckstone U2's</td><td class="border-l">15</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Cranley Buckstone JR's</td><td class="border-l">12</td><td>0</td><td><span class="text-xs">1 no tomato + real</span></td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Cranley Buckstone SR's</td><td class="border-l">18</td><td>1</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
-                            </tbody>
-                             <tfoot>
-                                <tr class="font-bold bg-gray-50 text-gray-800">
-                                    <td class="py-3 px-2 text-left">All Schools Total</td>
-                                    <td class="border-l">222</td><td>6</td><td>2</td>
-                                    <td class="border-l"></td><td></td><td></td>
-                                    <td class="border-l"></td><td></td><td></td>
-                                    <td class="border-l"></td><td></td><td></td>
-                                    <td class="border-l"></td><td></td><td></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-        </main>
+        </div><a href="school/school-login.html">School Login</a>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const weeklyOrdersContainer = document.getElementById('weekly-orders-container');
-            const schoolSelector = document.getElementById('school-selector');
-            const weeklyOrdersTbody = document.getElementById('weekly-orders-tbody');
-            const weeklyOrdersTfoot = document.getElementById('weekly-orders-tfoot');
-
-            const schoolData = {
-                "Dollar Nursery": [
-                    { day: 'Monday', std: 2, alt: 0, spc: '-' },
-                    { day: 'Tuesday', std: 3, alt: 1, spc: '1 Halal' },
-                    { day: 'Wednesday', std: 2, alt: 2, spc: '-' },
-                    { day: 'Thursday', std: 1, alt: 1, spc: '-' },
-                    { day: 'Friday', std: 2, alt: 0, spc: '-' },
-                    { day: 'Saturday', std: 3, alt: 1, spc: '-' },
-                    { day: 'Sunday', std: 1, alt: 0, spc: '-' },
-                ],
-                "Old Doune Road": [
-                    { day: 'Monday', std: 3, alt: 1, spc: '-' },
-                    { day: 'Tuesday', std: 5, alt: 0, spc: '-' },
-                    { day: 'Wednesday', std: 3, alt: 3, spc: '-' },
-                    { day: 'Thursday', std: 4, alt: 2, spc: '-' },
-                    { day: 'Friday', std: 3, alt: 1, spc: '-' },
-                    { day: 'Saturday', std: 4, alt: 1, spc: '-' },
-                    { day: 'Sunday', std: 2, alt: 0, spc: '-' },
-                ],
-                "Lecropt Nursery": [
-                    { day: 'Monday', std: 5, alt: 1, spc: '-' },
-                    { day: 'Tuesday', std: 4, alt: 0, spc: '-' },
-                    { day: 'Wednesday', std: 2, alt: 2, spc: '-' },
-                    { day: 'Thursday', std: 3, alt: 2, spc: '-' },
-                    { day: 'Friday', std: 2, alt: 1, spc: '-' },
-                    { day: 'Saturday', std: 4, alt: 1, spc: '-' },
-                    { day: 'Sunday', std: 3, alt: 1, spc: '-' },
-                ]
-                // ... add more schools data as needed
-            };
-            
-            // Populate dropdown
-            const schools = ["Dollar Nursery", "Old Doune Road", "Lecropt Nursery", "Fossoplay", "Rosemount Kinross", "Pitreavie Playgroup", "Cranley Lanark U2's", "Cranley Lanark Rd Juniors", "Cranley Lanark Rd Seniors", "Cranley Buckstone U2's", "Cranley Buckstone JR's", "Cranley Buckstone SR's"];
-            schools.forEach(school => {
-                const option = document.createElement('option');
-                option.value = school;
-                option.textContent = school;
-                schoolSelector.appendChild(option);
-            });
-            
-            // Function to parse numeric values from special orders string
-            function parseSpecialOrders(text) {
-                if (!text || text === '-' || text.toLowerCase().includes('-')) {
-                    return 0;
-                }
-                const numbers = text.match(/\b\d+\b/g);
-                if (!numbers) {
-                    return 0;
-                }
-                return numbers.reduce((sum, num) => sum + parseInt(num, 10), 0);
-            }
-
-            // Function to render table
-            function renderTable(schoolName) {
-                weeklyOrdersTbody.innerHTML = ''; // Clear existing table body
-                weeklyOrdersTfoot.innerHTML = ''; // Clear existing table foot
-                
-                const data = schoolData[schoolName] || []; // Default to empty array if no data
-                
-                let totalStd = 0;
-                let totalAlt = 0;
-                let totalSpc = 0;
-
-                data.forEach(row => {
-                    const specialCount = parseSpecialOrders(row.spc);
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td class="py-3 px-4">${row.day}</td>
-                        <td class="py-3 px-4">${row.std}</td>
-                        <td class="py-3 px-4">${row.alt}</td>
-                        <td class="py-3 px-4">${row.spc}</td>
-                    `;
-                    weeklyOrdersTbody.appendChild(tr);
-
-                    // Calculate totals
-                    totalStd += row.std;
-                    totalAlt += row.alt;
-                    totalSpc += specialCount;
-                });
-                
-                // Render footer with totals
-                if (data.length > 0) {
-                    const tfootTr = document.createElement('tr');
-                    tfootTr.className = 'font-bold bg-gray-50 text-gray-800';
-                    tfootTr.innerHTML = `
-                        <td class="py-3 px-4">Weekly Total</td>
-                        <td class="py-3 px-4">${totalStd}</td>
-                        <td class="py-3 px-4">${totalAlt}</td>
-                        <td class="py-3 px-4">${totalSpc}</td>
-                    `;
-                    weeklyOrdersTfoot.appendChild(tfootTr);
-                }
-            }
-
-            // Event listener for dropdown change
-            schoolSelector.addEventListener('change', (e) => {
-                if (e.target.value) {
-                    weeklyOrdersContainer.classList.remove('hidden');
-                    renderTable(e.target.value);
-                } else {
-                    weeklyOrdersContainer.classList.add('hidden');
-                }
-            });
-
-            // Set default school on page load
-            if (schools.length > 0) {
-                schoolSelector.value = schools[0];
-                weeklyOrdersContainer.classList.remove('hidden');
-                renderTable(schools[0]);
-            }
-
+        // Basic form submission handling to prevent page reload
+        const form = document.getElementById('loginForm');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            console.log('Form submitted!');
+            console.log('Email:', email);
+            console.log('Password:', password);
+            // You can add your authentication logic here
         });
     </script>
-</body>
-</html>
 
+</body>
+
+</html>
