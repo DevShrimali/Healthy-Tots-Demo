@@ -91,13 +91,16 @@
 
                     <form id="menu-item-form" action="#" method="POST" class="space-y-6">
                         <!-- Menu Item Name -->
-                        <div>
-                            <label for="menu-item-name" class="block text-sm font-medium text-gray-700">Menu Item Name</label>
-                            <input type="text" id="menu-item-name" name="menu-item-name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="e.g., Classic Burger">
+                        <div class="relative">
+                            <label for="menu-item-search" class="block text-sm font-medium text-gray-700">Menu Item Name</label>
+                            <input type="text" id="menu-item-search" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Search or add menu item...">
+                            <div id="menu-item-dropdown" class="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg hidden dropdown-content">
+                                <!-- Options will be populated by JS -->
+                            </div>
                         </div>
 
-                        <!-- Menu Category -->
-                        <div class="relative" style="opacity: 0; height: 0px;">
+                        <!-- Menu Category (Hidden) -->
+                        <div class="relative hidden">
                             <label for="menu-category" class="block text-sm font-medium text-gray-700">Menu Category</label>
                             <input type="text" id="menu-category-search" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Search or add new category...">
                             <div id="menu-category-dropdown" class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg hidden dropdown-content">
@@ -132,57 +135,77 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- DATA ---
-            let categories = ['Main Course', 'Appetizer', 'Dessert', 'Beverage', 'Side Dish'];
-            let ingredients = ['Beef Patty', 'Lettuce', 'Tomato', 'Cheese', 'Bun', 'Onion', 'Flour', 'Sugar', 'Salt', 'Chicken Breast'];
+            const menuItemsWithIngredients = {
+                'Pasta bolognese': ['Beef mince', 'Chopped tomato', 'Onion', 'Mixed peppers', 'Garlic', 'Oregano', 'Pasta'],
+                'Fishermans pie with mash potato': ['White fish', 'Carrot', 'Peas', 'Gravy', 'Mixed herbs', 'Potato'],
+                'Lentil soup with bread': ['Lentil', 'Potato', 'Onion', 'Carrot', 'Stock', '50/50 Bread'],
+                'Tuscan chicken with rice': ['Chicken', 'Chopped tomato', 'Onion', 'Spinach', 'Garlic', 'Italian seasoning', 'Rice'],
+                'Macaroni & cauliflower cheese with sweetcorn': ['Cauliflower', 'Sweetcorn', 'Cheese sauce mix', 'Cheese', 'Macaroni'],
+                'Indian fish curry with rice': ['White fish', 'Chopped tomato', 'Curried onion', 'Mixed peppers', 'Indian seasoning', 'Tumeric', 'Rice'],
+                'Carrot & parsnip soup with bread': ['Parsnip', 'Potato', 'Onion', 'Carrot', 'Stock', '50/50 Bread'],
+                'Chicken hotpot with mash potato': ['Chicken', 'Carrot', 'Peas', 'Oregano', 'Potato', 'Gravy'],
+                'Leek & potato soup with bread': ['Leek', 'Potato', 'Onion', 'Carrot', 'Stock', '50/50 Bread'],
+                'Chilli con carne with rice': ['Beef mince', 'Chopped tomato', 'Onion', 'Kidney beans', 'Mixed peppers', 'Chilli powder', 'Rice']
+            };
+            
+            let allIngredients = [...new Set(Object.values(menuItemsWithIngredients).flat())];
             let selectedIngredients = new Set();
 
-            // --- CATEGORY DROPDOWN LOGIC ---
-            const categorySearch = document.getElementById('menu-category-search');
-            const categoryDropdown = document.getElementById('menu-category-dropdown');
+            // --- MENU ITEM DROPDOWN LOGIC ---
+            const menuItemSearch = document.getElementById('menu-item-search');
+            const menuItemDropdown = document.getElementById('menu-item-dropdown');
 
-            const renderCategoryDropdown = (filter = '') => {
-                const filteredCategories = categories.filter(c => c.toLowerCase().includes(filter.toLowerCase()));
-                categoryDropdown.innerHTML = '';
+            const renderMenuItemDropdown = (filter = '') => {
+                const menuItems = Object.keys(menuItemsWithIngredients);
+                const filteredItems = menuItems.filter(item => item.toLowerCase().includes(filter.toLowerCase()));
+                menuItemDropdown.innerHTML = '';
                 
-                if (filteredCategories.length > 0) {
-                    filteredCategories.forEach(category => {
-                        const item = document.createElement('a');
-                        item.href = '#';
-                        item.textContent = category;
-                        item.className = 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
-                        item.onclick = (e) => {
+                if (filteredItems.length > 0) {
+                    filteredItems.forEach(item => {
+                        const option = document.createElement('a');
+                        option.href = '#';
+                        option.textContent = item;
+                        option.className = 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
+                        option.onclick = (e) => {
                             e.preventDefault();
-                            categorySearch.value = category;
-                            categoryDropdown.classList.add('hidden');
+                            menuItemSearch.value = item;
+                            menuItemDropdown.classList.add('hidden');
+                            // Auto-populate ingredients
+                            const ingredients = menuItemsWithIngredients[item] || [];
+                            selectedIngredients = new Set(ingredients);
+                            renderIngredientTags();
                         };
-                        categoryDropdown.appendChild(item);
+                        menuItemDropdown.appendChild(option);
                     });
                 }
 
-                if (filter && !categories.find(c => c.toLowerCase() === filter.toLowerCase())) {
+                if (filter && !menuItems.find(c => c.toLowerCase() === filter.toLowerCase())) {
                     const addItem = document.createElement('a');
                     addItem.href = '#';
                     addItem.innerHTML = `Add "<strong>${filter}</strong>"`;
                     addItem.className = 'block px-4 py-2 text-sm text-indigo-600 hover:bg-gray-100';
                     addItem.onclick = (e) => {
                         e.preventDefault();
-                        categories.push(filter);
-                        categorySearch.value = filter;
-                        categoryDropdown.classList.add('hidden');
+                        menuItemsWithIngredients[filter] = []; // Add new item with empty ingredients
+                        menuItemSearch.value = filter;
+                        menuItemDropdown.classList.add('hidden');
+                        selectedIngredients.clear();
+                        renderIngredientTags();
                     };
-                    categoryDropdown.appendChild(addItem);
+                    menuItemDropdown.appendChild(addItem);
                 }
                 
-                categoryDropdown.classList.toggle('hidden', categoryDropdown.children.length === 0);
+                menuItemDropdown.classList.toggle('hidden', menuItemDropdown.children.length === 0);
             };
 
-            categorySearch.addEventListener('input', () => renderCategoryDropdown(categorySearch.value));
-            categorySearch.addEventListener('focus', () => renderCategoryDropdown(categorySearch.value));
+            menuItemSearch.addEventListener('input', () => renderMenuItemDropdown(menuItemSearch.value));
+            menuItemSearch.addEventListener('focus', () => renderMenuItemDropdown(menuItemSearch.value));
             document.addEventListener('click', (e) => {
-                if (!categorySearch.contains(e.target)) {
-                    categoryDropdown.classList.add('hidden');
+                if (!menuItemSearch.parentElement.contains(e.target)) {
+                    menuItemDropdown.classList.add('hidden');
                 }
             });
+
 
             // --- INGREDIENTS DROPDOWN LOGIC ---
             const ingredientsSearch = document.getElementById('ingredients-search');
@@ -216,10 +239,11 @@
                 }
                 ingredientsSearch.value = '';
                 ingredientsDropdown.classList.add('hidden');
+                ingredientsSearch.focus();
             };
 
             const renderIngredientsDropdown = (filter = '') => {
-                const availableIngredients = ingredients.filter(i => 
+                const availableIngredients = allIngredients.filter(i => 
                     !selectedIngredients.has(i) && 
                     i.toLowerCase().includes(filter.toLowerCase())
                 );
@@ -239,14 +263,14 @@
                     });
                 }
                 
-                if (filter && !ingredients.find(i => i.toLowerCase() === filter.toLowerCase())) {
+                if (filter && !allIngredients.find(i => i.toLowerCase() === filter.toLowerCase())) {
                     const addItem = document.createElement('a');
                     addItem.href = '#';
                     addItem.innerHTML = `Add "<strong>${filter}</strong>"`;
                     addItem.className = 'block px-4 py-2 text-sm text-indigo-600 hover:bg-gray-100';
                     addItem.onclick = (e) => {
                         e.preventDefault();
-                        ingredients.push(filter);
+                        allIngredients.push(filter);
                         addIngredient(filter);
                     };
                     ingredientsDropdown.appendChild(addItem);
@@ -257,26 +281,26 @@
 
             ingredientsSearch.addEventListener('input', () => renderIngredientsDropdown(ingredientsSearch.value));
             ingredientsSearch.addEventListener('focus', () => renderIngredientsDropdown(ingredientsSearch.value));
-            document.addEventListener('click', (e) => {
-                if (!ingredientsSearch.contains(e.target)) {
+             document.addEventListener('click', (e) => {
+                if (!ingredientsSearch.parentElement.contains(e.target)) {
                     ingredientsDropdown.classList.add('hidden');
                 }
             });
+
 
             // --- FORM SUBMISSION ---
             document.getElementById('menu-item-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const formData = {
-                    name: document.getElementById('menu-item-name').value,
-                    category: categorySearch.value,
+                    name: menuItemSearch.value,
                     ingredients: Array.from(selectedIngredients)
                 };
                 console.log('Form Submitted:', formData);
                 alert('Menu item submitted! Check the console for the data.');
-                // Here you would typically send the data to a server
             });
         });
     </script>
 
 </body>
 </html>
+
