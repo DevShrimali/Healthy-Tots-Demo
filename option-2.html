@@ -53,9 +53,9 @@
             padding: 8px;
         }
         .fc .fc-event {
-            background-color: #fef2f2; /* red-50 */
-            border: 1px solid #fecaca; /* red-200 */
-            color: #b91c1c; /* red-800 */
+            background-color: #fca5a5; /* red-300 */
+            border: 1px solid #f87171; /* red-400 */
+            color: black; 
             padding: 4px 6px;
             border-radius: 4px;
             font-size: 0.75rem;
@@ -65,7 +65,9 @@
         }
         .fc .fc-event-title {
            font-weight: 500;
+           color: #470303 !important;
         }
+       
     </style>
 </head>
 <body class="bg-gray-100">
@@ -159,7 +161,7 @@
                          const puddingText = puddingSelect.value ? puddingSelect.options[puddingSelect.selectedIndex].text : '';
                          
                          events.push({
-                            title: `${menuText}${puddingText && puddingText !== 'Select a menu first' ? ': ' + puddingText : ''}`,
+                            title: `${menuText}${puddingText && puddingText !== 'Select a menu first' ? ', ' + puddingText : ''}`,
                             start: dateInput.value,
                             allDay: true
                         });
