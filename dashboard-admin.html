@@ -102,9 +102,9 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y">
-                                <tr><td class="py-3 px-4">Dollar Nursery</td><td class="py-3 px-4">30</td><td class="py-3 px-4">0</td><td class="py-3 px-4">-</td></tr>
+                                <tr><td class="py-3 px-4">Dollar Nursery</td><td class="py-3 px-4">30</td><td class="py-3 px-4">0</td><td class="py-3 px-4">1 halal</td></tr>
                                 <tr><td class="py-3 px-4">Old Doune Road</td><td class="py-3 px-4">36</td><td class="py-3 px-4">2</td><td class="py-3 px-4">-</td></tr>
-                                <tr><td class="py-3 px-4">Lecropt Nursery</td><td class="py-3 px-4">32</td><td class="py-3 px-4">1</td><td class="py-3 px-4">1 halal</td></tr>
+                                <tr><td class="py-3 px-4">Lecropt Nursery</td><td class="py-3 px-4">32</td><td class="py-3 px-4">1</td><td class="py-3 px-4">-</td></tr>
                                 <tr><td class="py-3 px-4">Fossoplay</td><td class="py-3 px-4">16</td><td class="py-3 px-4">0</td><td class="py-3 px-4">-</td></tr>
                                 <tr><td class="py-3 px-4">Rosemount Kinross</td><td class="py-3 px-4">32</td><td class="py-3 px-4">2</td><td class="py-3 px-4">-</td></tr>
                                 <tr><td class="py-3 px-4">Pitreavie Playgroup</td><td class="py-3 px-4">7</td><td class="py-3 px-4">0</td><td class="py-3 px-4">-</td></tr>
@@ -145,9 +145,9 @@
                             </thead>
                             <tbody class="divide-y">
                                 <!-- Dummy Data Rows -->
-                                <tr><td class="py-2 px-2 text-left">Dollar Nursery</td><td class="border-l">30</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Dollar Nursery</td><td class="border-l">30</td><td>0</td><td><span class="text-xs">1 Halal</span></td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
                                 <tr><td class="py-2 px-2 text-left">Old Doune Road</td><td class="border-l">36</td><td>2</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
-                                <tr><td class="py-2 px-2 text-left">Lecropt Nursery</td><td class="border-l">32</td><td>1</td><td><span class="text-xs">1 halal</span></td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
+                                <tr><td class="py-2 px-2 text-left">Lecropt Nursery</td><td class="border-l">32</td><td>1</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
                                 <tr><td class="py-2 px-2 text-left">Fossoplay</td><td class="border-l">16</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
                                 <tr><td class="py-2 px-2 text-left">Rosemount Kinross</td><td class="border-l">32</td><td>2</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
                                 <tr><td class="py-2 px-2 text-left">Pitreavie Playgroup</td><td class="border-l">7</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td><td class="border-l">0</td><td>0</td><td>-</td></tr>
@@ -185,13 +185,11 @@
 
             const schoolData = {
                 "Dollar Nursery": [
-                    { day: 'Monday', std: 2, alt: 0, spc: '-' },
-                    { day: 'Tuesday', std: 3, alt: 1, spc: '1 Halal' },
+                    { day: 'Monday', std: 2, alt: 0, spc: '1 Halal' },
+                    { day: 'Tuesday', std: 3, alt: 1, spc: '-' },
                     { day: 'Wednesday', std: 2, alt: 2, spc: '-' },
                     { day: 'Thursday', std: 1, alt: 1, spc: '-' },
                     { day: 'Friday', std: 2, alt: 0, spc: '-' },
-                    { day: 'Saturday', std: 3, alt: 1, spc: '-' },
-                    { day: 'Sunday', std: 1, alt: 0, spc: '-' },
                 ],
                 "Old Doune Road": [
                     { day: 'Monday', std: 3, alt: 1, spc: '-' },
@@ -199,8 +197,6 @@
                     { day: 'Wednesday', std: 3, alt: 3, spc: '-' },
                     { day: 'Thursday', std: 4, alt: 2, spc: '-' },
                     { day: 'Friday', std: 3, alt: 1, spc: '-' },
-                    { day: 'Saturday', std: 4, alt: 1, spc: '-' },
-                    { day: 'Sunday', std: 2, alt: 0, spc: '-' },
                 ],
                 "Lecropt Nursery": [
                     { day: 'Monday', std: 5, alt: 1, spc: '-' },
@@ -208,8 +204,6 @@
                     { day: 'Wednesday', std: 2, alt: 2, spc: '-' },
                     { day: 'Thursday', std: 3, alt: 2, spc: '-' },
                     { day: 'Friday', std: 2, alt: 1, spc: '-' },
-                    { day: 'Saturday', std: 4, alt: 1, spc: '-' },
-                    { day: 'Sunday', std: 3, alt: 1, spc: '-' },
                 ]
                 // ... add more schools data as needed
             };
